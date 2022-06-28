@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                color: rgb(48, 56, 77);
+                background-color: rgb(117, 40, 101);
+                font-family: Helvetica, sans-serif;
+            }
+            .header {
+                transition: width 4s, height 4s, transform 4s;
+            }
+            .header h1 {
+                width: fit-content;
+                color: rgb(96, 227, 231);
+                margin: 0 0 50px;
+            }
+            .header:hover {
+                transform: rotateY(360deg);
+            }
+            .main {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                margin-top: 100px;
+            }
+            .form {
+                display: flex;
+                flex-direction: column;
+                margin: auto auto 30px;
+                justify-content: center;
+                align-items: center;
+            }
+            #button-section {
+                display: flex;
+                width: 800px;
+                justify-content: space-evenly;
+                margin-top: 20px;
+            }
+            button {
+                width: 150px;
+                height: 50px;
+                font-size: 20px;
+                border-radius: 5px;
+                border: 1px solid lightgrey;
+                cursor: pointer;
+            }
+            button {
+                border: none;
+                color: rgb(29, 10, 29);
+                background-color: rgb(96, 227, 231);
+            }
+            button:hover {
+                background-color: rgb(5, 230, 238);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            }
+            textarea[type=number], select {
+                font-size: 20px;
+                width: 800px;
+                height: 600px;
+                margin-right: 20px;
+                padding: 5px 10px;
+                box-sizing: border-box;
+                background-color: rgb(241, 240, 240);
+            }
+            textarea:focus {
+                outline: none;
+            }
+            textarea:placeholder-shown + #submit {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        </style>
+        <title>Convert Text to Speech</title>
+    </head>
+    <body>
+        <div class="main" onkeydown="onKeyDown(event)">
+            <div class="header">
+                <h1>Convert Text to Speech</h1>
+            </div>
+            <div class="form">
+                <textarea autofocus type="number" id="num" name="num" placeholder="Enter the text to convert to speech" onchange="checkNum()"></textarea>
+                <div id="button-section">
+                    <button id="submit" type="submit" onclick="submit()">Play</button>
+                    <button id="pause" type="submit" onclick="pause()">Pause</button>
+                    <button id="resume" type="submit" onclick="resume()">Resume</button>
+                    <button id="cancel" type="submit" onclick="cancel()">Stop</button>    
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function submit() {
+                let utter = new SpeechSynthesisUtterance();
+                utter.lang = 'en-IN';
+                utter.text = document.getElementById("num").value;
+                utter.volume = 0.5;
+                utter.rate = 0.7;
+
+                // speak
+                window.speechSynthesis.speak(utter);
+            }
+
+            function pause() {
+                window.speechSynthesis.pause();
+            }
+
+            function resume() {
+                window.speechSynthesis.resume();
+            }
+
+            function cancel() {
+                window.speechSynthesis.cancel();
+            }
+        </script>
+    </body>
+</html>
